@@ -1,0 +1,32 @@
+### GET request to example server
+GET http://localhost:8089/EMPREST/emp/getallemp
+
+###
+GET http://localhost:8089/EMPREST/emp/112
+
+###
+
+POST http://localhost:8089/EMPREST/emp/create
+content-type: application/json;charset=UTF-8
+
+{
+  "empId" : 130,
+  "empName": "PSS"
+}
+
+
+###
+PUT http://localhost:8089/EMPREST/emp/116
+content-type: application/json;charset=UTF-8
+
+{
+"empId": 116,
+"empName": "KKK"
+}
+###
+
+DELETE  http://localhost:8089/EMPREST/emp/110
+content-type: application/json;charset=UTF-8
+
+###
+

@@ -4,37 +4,136 @@ import com.employee.details.model.*;
 import com.employee.details.service.EmployeeService;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
+
 import javax.persistence.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/employees")
+@Path("/emp")
 public class EmployeeController {
-//    @Path("")
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String EmployeeController() {
-//        return "Hello Employee";
-//    }
-//
-//    @PersistenceUnit(unitName = "employeePU")
 
-  @Inject
+  @EJB
    private EmployeeService employeeService;
 
     @GET
-    @Path("/getallemployees")
+    @Path("/getallemp")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllEmployees() {
-        List<Employee> employeeList = employeeService.getAllEmployees();
-        // Log the response being returned
-        System.out.println("Employee list: " + employeeList);
 
-        return Response.ok(employeeList).build();
+        return Response.ok(employeeService.getAllEmployees()).build();
     }
+
+        @GET
+        @Path("/{id}")
+        @Produces(MediaType.APPLICATION_JSON)
+        public Response getEmployee(@PathParam("id") int id) {
+            Employee employee = employeeService.getEmployeeById(id);
+            if (employee == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+            return Response.ok(employee).build();
+        }
+
+
+        @POST
+        @Path("/create")
+        @Consumes(MediaType.APPLICATION_JSON)
+        @Produces(MediaType.APPLICATION_JSON)
+        public Response createEmployee(Employee employee) {
+            Employee createdEmployee = employeeService.createEmployee(employee);
+            return Response.status(Response.Status.CREATED).entity(createdEmployee).build();
+        }
+
+
+        @PUT
+        @Path("/{id}")
+        @Consumes(MediaType.APPLICATION_JSON)
+        @Produces(MediaType.APPLICATION_JSON)
+        public Response updateEmployee(@PathParam("id") int id, Employee employee) {
+            Employee updatedEmployee = employeeService.updateEmployee(id, employee);
+            if (updatedEmployee == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+            return Response.ok(updatedEmployee).build();
+        }
+
+
+        @DELETE
+        @Path("/{id}")
+        public Response deleteEmployee(@PathParam("id") int id) {
+            boolean isDeleted = employeeService.deleteEmployee(id);
+            if (!isDeleted) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+            return Response.noContent().build();
+        }
+
+        // Fetch all addresses
+//        @GET
+//        @Path("/addresses")
+//        @Produces(MediaType.APPLICATION_JSON)
+//        public Response getAllAddresses() {
+//            List<Address> addressList = employeeService.getAllAddresses();
+//            return Response.ok(addressList).build();
+//        }
+//
+//        // Fetch a specific address by ID
+//        @GET
+//        @Path("/addresses/{id}")
+//        @Produces(MediaType.APPLICATION_JSON)
+//        public Response getAddress(@PathParam("id") int id) {
+//            Address address = employeeService.getAddressById(id);
+//            if (address == null) {
+//                return Response.status(Response.Status.NOT_FOUND).build();
+//            }
+//            return Response.ok(address).build();
+//        }
+//
+//        // Create a new address
+//        @POST
+//        @Path("/addresses")
+//        @Consumes(MediaType.APPLICATION_JSON)
+//        @Produces(MediaType.APPLICATION_JSON)
+//        public Response createAddress(Address address) {
+//            Address createdAddress = employeeService.createAddress(address);
+//            return Response.status(Response.Status.CREATED).entity(createdAddress).build();
+//        }
+//
+//        // Update an existing address
+//        @PUT
+//        @Path("/addresses/{id}")
+//        @Consumes(MediaType.APPLICATION_JSON)
+//        @Produces(MediaType.APPLICATION_JSON)
+//        public Response updateAddress(@PathParam("id") int id, Address address) {
+//            Address updatedAddress = employeeService.updateAddress(id, address);
+//            if (updatedAddress == null) {
+//                return Response.status(Response.Status.NOT_FOUND).build();
+//            }
+//            return Response.ok(updatedAddress).build();
+//        }
+//
+//        // Delete an address by ID
+//        @DELETE
+//        @Path("/addresses/{id}")
+//        public Response deleteAddress(@PathParam("id") int id) {
+//            boolean isDeleted = employeeService.deleteAddress(id);
+//            if (!isDeleted) {
+//                return Response.status(Response.Status.NOT_FOUND).build();
+//            }
+//            return Response.noContent().build();
+//        }
+    }
+
+
+
+
+
+
+
+
+    //-----------------------------------------------------------------------------------------
 
 //    public Response getAllEmployees() {
 //       List<Employee> employeeList= employeeService.getAllEmployees();
@@ -217,4 +316,3 @@ public class EmployeeController {
 //        }
 //    }
 
-}

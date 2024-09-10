@@ -1,0 +1,100 @@
+
+#Operation Request with one OReq/ORes message
+POST http://localhost:8120/acs-operation-service/operation/operationRequest
+content-type: application/json;charset=UTF-8
+X-Request-ID: f9bce847-b946-4c60-b6e5-c4a1ff801521
+
+{
+  "dsReferenceNumber": "3DS_LOA_DIS_FTPT_FIME14_1101",
+  "dsTransID": "f9bce847-b946-4c60-b6e5-c4a1ff801521",
+  "messageType": "OReq",
+  "messageVersion": "2.3.1",
+  "opCategory": "01",
+  "opDescription": "Test Operation Description",
+  "opExpDate": "20240330",
+  "opPriorTransRef": {
+    "transId": "d25c6ee4-bb61-4223-ac66-c26bd20735ad",
+    "transIdType": "01"
+  },
+  "opSeq": {
+    "seqId": "687ab69f-0750-4289-9a15-296d0f34a78e",
+    "seqNum": "02",
+    "seqTotal": "02"
+  },
+  "opSeverity": "04"
+}
+
+###Operation Request with validation error
+POST http://localhost:8120/acs-operation-service/operation/operationRequest
+content-type: application/json;charset=UTF-8
+X-Request-ID: 8a96434d-1396-4031-85ab-aea8304d6dcd
+
+{
+  "dsReferenceNumber": "3DS_LOA_DIS_FTPT_FIME14_1101",
+  "dsTransID": "8a96434d-1396-4031-85ab-aea8304d6dcd",
+  "messageType": "OReq",
+  "messageVersion": "2.3.1",
+  "opCategory": "01",
+  "opDescription": "Test Operation Description",
+  "opExpDate": "20240330",
+  "opPriorTransRef": {
+    "transId": "42ef6760-46cc-4115-a466-72e3b611ced8",
+    "transIdType": "01"
+  },
+  "opSeq": {
+    "seqNum": "01",
+    "seqTotal": "02"
+  },
+  "opSeverity": "04"
+}
+
+###Operation Request with a sequence of 2 messages (first message)
+POST http://localhost:8120/acs-operation-service/operation/operationRequest
+content-type: application/json;charset=UTF-8
+X-Request-ID: 08605965-e0c9-4d35-b94d-763207ccb75d
+
+{
+  "dsReferenceNumber": "3DS_LOA_DIS_FTPT_FIME14_1101",
+  "dsTransID": "08605965-e0c9-4d35-b94d-763207ccb75d",
+  "messageType": "OReq",
+  "messageVersion": "2.3.1",
+  "opCategory": "01",
+  "opDescription": "Test Operation Description",
+  "opExpDate": "20240330",
+  "opPriorTransRef": {
+    "transId": "f9919944-f252-4666-a484-d4ac31873c65",
+    "transIdType": "01"
+  },
+  "opSeq": {
+    "seqId": "aa22490a-7d2c-4dab-b442-2b5538504daa",
+    "seqNum": "01",
+    "seqTotal": "02"
+  },
+  "opSeverity": "04"
+}
+
+###Operation Request with a sequence of 2 messages (second message)
+POST http://localhost:8120/acs-operation-service/operation/operationRequest
+content-type: application/json;charset=UTF-8
+X-Request-ID: c360753e-db15-4520-927b-f8c154d1e01b
+
+{
+  "dsReferenceNumber": "3DS_LOA_DIS_FTPT_FIME14_1101",
+  "dsTransID": "c360753e-db15-4520-927b-f8c154d1e01b",
+  "messageType": "OReq",
+  "messageVersion": "2.3.1",
+  "opCategory": "01",
+  "opDescription": "Test Operation Description",
+  "opExpDate": "20240330",
+  "opPriorTransRef": {
+    "transId": "61f5d140-56d4-427c-9f1e-b3a782651714",
+    "transIdType": "01"
+  },
+  "opSeq": {
+    "seqId": "aa22490a-7d2c-4dab-b442-2b5538504daa",
+    "seqNum": "02",
+    "seqTotal": "02"
+  },
+  "opSeverity": "04"
+}
+

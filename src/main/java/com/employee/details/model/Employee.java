@@ -1,18 +1,19 @@
 package com.employee.details.model;
-import javax.persistence.*;
+import
+        javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
 
 @Entity
-//@Table(name="employee")
+@Table(name="employee")
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "emp_id")
     private int empId;
 
-    @Column(name = "emp_name", nullable = false)
+    @Column(name = "emp_name")
     private String empName;
 
 //    @Column(name = "emp_company_name", nullable = false)

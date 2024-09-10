@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -13,21 +14,44 @@ public class EmployeeService {
 
     @PersistenceContext(unitName = "employeePU")
     private EntityManager entityManager;
-
-    public Employee getEmployee(Long id) {
-        return entityManager.find(Employee.class, id);
-    }
     public List<Employee> getAllEmployees() {
 
-        String sql = "SELECT * FROM employee";
-        Query query = entityManager.createNativeQuery(sql, Employee.class);
-       // TypedQuery<Employee> query = entityManager.createQuery("SELECT e FROM Employee e", Employee.class);
+        TypedQuery<Employee> query = entityManager.createQuery("SELECT e FROM com.employee.details.model.Employee e ", Employee.class);
         List<Employee> employees = query.getResultList();
-//       for(Employee employee : employees) {
-//           System.out.println(employee.toString());
-//       }
-        System.out.println("Fetched employees: " + employees);
-        return employees;
-       // return query.getResultList();
+
+        return employees != null ? employees :  new ArrayList<Employee>();
+    }
+
+
+    public Employee getEmployeeById(int empId) {
+        return entityManager.find(Employee.class, empId);
+    }
+
+    // Create a new employee
+    public Employee createEmployee(Employee employee) {
+        entityManager.merge(employee);
+        return employee;
+    }
+
+    // Update an existing employee
+    public Employee updateEmployee(int empId, Employee updatedEmployee) {
+        Employee existingEmployee = entityManager.find(Employee.class, empId);
+        if (existingEmployee != null) {
+            existingEmployee.setEmpName(updatedEmployee.getEmpName());
+            // Add setters for any other fields you want to update
+            entityManager.merge(existingEmployee);
+            return existingEmployee;
+        }
+        return null;
+    }
+
+
+    public boolean deleteEmployee(int empId) {
+        Employee employee = entityManager.find(Employee.class, empId);
+        if (employee != null) {
+            entityManager.remove(employee);
+            return true;
+        }
+        return false;
     }
 }
